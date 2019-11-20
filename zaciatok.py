@@ -5,6 +5,7 @@ canvas=tkinter.Canvas(width=w,height=h)
 canvas.pack()
 from random import *
 
+print("starting application")
 
 zmazatKlientaOkno = False
 def detailklienta():
