@@ -1,0 +1,4 @@
+3
+1;Juraj;Beran;0856117999
+2;Igor;Valek;0806222497
+3;Jana;Novakova;7561452225
