@@ -7,22 +7,28 @@ from random import *
 
 zmazatbuttony = False
 zmazatentry = False
+zmazatentry2 = False
 zmazatKlientaOkno = False
 zmazatUpravit = False
 labelMenuImg=0
 obrazok = False
+
       
 def menu():
-      global button1, button2, button3, button4, button5,menuImg,labelMenuImg, obrazok, button6, ucet,zmazatKlientaOkno, meno, priezvisko, mail, mesto, adresa, psc, zmazatentry, buttonspat, zmazatbuttony
+      global button1, button2, button3, button4, button5,menuImg,labelMenuImg, obrazok, button6, ucet,zmazatKlientaOkno,zmazatentry2,meno2, rodnecislo,priezvisko2,rodnecislo2, priezvisko, mail, zmazatentry, buttonspat,buttonulozit, zmazatbuttony
       canvas.delete('all')
       if (zmazatentry==True):
             meno.destroy()
             priezvisko.destroy()
-            mail.destroy()
-            mesto.destroy()
-            adresa.destroy()
-            psc.destroy()
+            rodnecislo.destroy()
             buttonspat.destroy()
+            buttonulozit.destroy()
+      if (zmazatentry2==True):
+            meno2.destroy()
+            priezvisko2.destroy()
+            rodnecislo2.destroy()
+            buttonspat.destroy()
+            buttonulozit.destroy()
       if (zmazatKlientaOkno==True):
             button3.destroy()
             button4.destroy()
@@ -51,7 +57,7 @@ def menu():
       
       
 def detailklienta():
-      global button1, button2, button3, button4, button5,obrazok, button6, ucet,zmazatKlientaOkno, meno, priezvisko, mail, mesto, adresa, psc, zmazatentry, buttonspat, zmazatbuttony, zmazatUpravit
+      global button1, button2, button3, button4, button5,obrazok, button6, ucet,zmazatKlientaOkno, meno, priezvisko, rodnecislo,meno2,zmazatentry2,priezvisko2,rodnecislo2, zmazatentry, buttonspat,buttonulozit, zmazatbuttony, zmazatUpravit
       canvas.delete('all')
       button1.destroy()
       button2.destroy()
@@ -62,7 +68,7 @@ def detailklienta():
       zmazatUpravit =True
       labelMenuImg.config(image='')
       labelMenuImg.destroy()
-      button3 = tkinter.Button(text='UPRAVIŤ KLIENTA',command = formular,height = 2,width = 15,font="Helvetica 10")
+      button3 = tkinter.Button(text='UPRAVIŤ KLIENTA',command = formular2,height = 2,width = 15,font="Helvetica 10")
       button3.pack()
       button3.place(x=w//10*7.6,y=20)
       button4 = tkinter.Button(text='ZMAZAŤ KLIENTA',command = okno,height = 2,width = 15,font="Helvetica 10")
@@ -81,7 +87,7 @@ def detailklienta():
       
       
 def formular():
-      global button1, button2, button3, button4, button5, button6,obrazok, ucet,zmazatKlientaOkno, meno, priezvisko, mail, mesto, adresa, psc, zmazatentry, buttonspat, zmazatbuttony, zmazatUpravit
+      global button1, button2, button3, button4, button5, button6,obrazok, ucet,zmazatKlientaOkno, meno, priezvisko, rodnecislo,meno2,zmazatentry2,priezvisko2, rodnecislo2,zmazatentry, buttonspat,buttonulozit, zmazatbuttony, zmazatUpravit
       canvas.delete('all')
       button1.destroy()
       button2.destroy()
@@ -104,29 +110,56 @@ def formular():
       priezvisko.pack()
       priezvisko.place(x=w//3,y=h//20*5,height=30)
       canvas.create_text(w//3-15,h//20*5+15,text='Priezvisko:',font='Arial 15',anchor="e")
-      mail = tkinter.Entry(width=40,font = "Helvetica 15 bold")
-      mail.pack()
-      mail.place(x=w//3,y=h//20*6,height=30)
-      canvas.create_text(w//3-15,h//20*6+15,text='E-mail:',font='Arial 15',anchor="e")
-      mesto = tkinter.Entry(width=40,font = "Helvetica 15 bold")
-      mesto.pack()
-      mesto.place(x=w//3,y=h//20*8,height=30)
-      canvas.create_text(w//3-15,h//20*8+15,text='Mesto:',font='Arial 15',anchor="e")
-      adresa = tkinter.Entry(width=40,font = "Helvetica 15 bold")
-      adresa.pack()
-      adresa.place(x=w//3,y=h//20*9,height=30)
-      canvas.create_text(w//3-15,h//20*9+15,text='Adresa:',font='Arial 15',anchor="e")
-      psc = tkinter.Entry(width=40,font = "Helvetica 15 bold")
-      psc.pack()
-      psc.place(x=w//3,y=h//20*10,height=30)
-      canvas.create_text(w//3-15,h//20*10+15,text='PSČ:',font='Arial 15',anchor="e")
+      rodnecislo = tkinter.Entry(width=40,font = "Helvetica 15 bold")
+      rodnecislo.pack()
+      rodnecislo.place(x=w//3,y=h//20*6,height=30)
+      canvas.create_text(w//3-15,h//20*6+15,text='Rodné číslo:',font='Arial 15',anchor="e")
+      #...
+      
       buttonspat = tkinter.Button(text='SPAŤ',font="Helvetica 10",command = menu,height = 2,width = 10)
       buttonspat.pack()
       buttonspat.place(x=w//50,y=20)
+      buttonulozit = tkinter.Button(text='ULOŽIŤ',font="Helvetica 10",command = ulozit,height = 2,width = 10)
+      buttonulozit.pack()
+      buttonulozit.place(x=w//50*31.2,y=h//20*7.5)
+
+def ulozit():
+      canvas.create_rectangle(450,450,500,500)
+
+
+
+def formular2():
+      global button1, button2, button3, button4, button5, button6,obrazok, ucet,zmazatKlientaOkno, meno, priezvisko, rodnecislo,zmazatentry2,meno2, priezvisko2,rodnecislo2,zmazatentry, buttonspat,buttonulozit, zmazatbuttony, zmazatUpravit
+      canvas.delete('all')
+      if (zmazatUpravit==True):
+            button3.destroy()
+            button4.destroy()
+
+      zmazatentry2 = True
+      meno2 = tkinter.Entry(width=40,font = "Helvetica 15 bold")
+      meno2.pack()
+      meno2.place(x=w//3,y=h//20*4,height=30)
+      canvas.create_text(w//3-15,h//20*4+15,text='Meno:',font='Arial 15',anchor="e")
+      priezvisko2 = tkinter.Entry(width=40,font = "Helvetica 15 bold")
+      priezvisko2.pack()
+      priezvisko2.place(x=w//3,y=h//20*5,height=30)
+      canvas.create_text(w//3-15,h//20*5+15,text='Priezvisko:',font='Arial 15',anchor="e")
+      rodnecislo2 = tkinter.Entry(width=40,font = "Helvetica 15 bold")
+      rodnecislo2.pack()
+      rodnecislo2.place(x=w//3,y=h//20*6,height=30)
+      canvas.create_text(w//3-15,h//20*6+15,text='Rodné číslo:',font='Arial 15',anchor="e")
+      #...
+      buttonulozit = tkinter.Button(text='ULOŽIŤ',font="Helvetica 10",command = ulozit,height = 2,width = 10)
+      buttonulozit.pack()
+      buttonulozit.place(x=w//50*31.2,y=h//20*7.5)
+      buttonspat = tkinter.Button(text='SPAŤ',font="Helvetica 10",command = menu,height = 2,width = 10)
+      buttonspat.pack()
+      buttonspat.place(x=w//50,y=20)
+      
 
       
 def okno():
-      global button1, button2, button3, button4, button5, button6, ucet,zmazatKlientaOkno, meno, priezvisko, mail, mesto, adresa, psc, zmazatentry, buttonspat, zmazatbuttony
+      global button1, button2, button3, button4, button5, button6, ucet,zmazatKlientaOkno, meno, priezvisko, rodnecislo, zmazatentry,zmazatentry2,priezvisko2,rodnecislo2, meno2,buttonspat, zmazatbuttony,buttonulozit
       zmazatKlientaOkno = True
       button5 = tkinter.Button(text='ANO',font='arial 10',command = menu,height = 1,width = 10)
       button5.pack()
@@ -147,3 +180,6 @@ def detailucta():
 
 
 menu()
+
+
+
