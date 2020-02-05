@@ -1,4 +1,4 @@
-import tkinter
+import tkinter, os
 from tkinter import messagebox, simpledialog
 w = 1280
 h = 720
@@ -16,6 +16,7 @@ labelMenuImg=0
 obrazok = False
 existujeklient = False
 zmazatlistbox = False
+pokus = False 
 
 
 
@@ -180,56 +181,57 @@ def formular():
 
 def pridaj_klienta():
       global uctyLockSubor, existujeklient
-##      if(os.path.exists("pokus3_LOCK.txt")):
-##            canvas.after(2000,a)
-##      elif(os.path.exists("pokus3_LOCK.txt")==False):
-##            uctyLockSubor = open("pokus3_LOCK.txt", "w+")
+      if(os.path.exists("KLIENTI_LOCK.txt")):
+            canvas.after(2000,pridaj_klienta)
+      else:
+            print(True)
+            uctyLockSubor = open("KLIENTI_LOCK.txt", "w+")
 
       
-      subor = open('KLIENTI.txt','r')
-      riadky = subor.readlines()
-      print(riadky)
-      print(riadky[0])
-      subor.close()
+            subor = open('KLIENTI.txt','r+')
+            riadky = subor.readlines()
+            print(riadky)
+            print(riadky[0])
+            subor.close()
 
-      riadok = riadky[len(riadky)-1]
+            riadok = riadky[len(riadky)-1]
 
-      print(riadok)
-      cislo = riadok.split(';')
-      print(cislo[0])
+            print(riadok)
+            cislo = riadok.split(';')
+            print(cislo[0])
 
-      ip = int(cislo[0])+(1)
-      print(ip)
-                    
-      meno1 = entryMeno.get()
-      prie1 = entryPriezvisko.get()
-      rodne1 = entryRodnecislo.get()
-      print(meno1)
-      print(prie1)
+            ip = int(cislo[0])+(1)
+            print(ip)
+                          
+            meno1 = entryMeno.get()
+            prie1 = entryPriezvisko.get()
+            rodne1 = entryRodnecislo.get()
+            print(meno1)
+            print(prie1)
 
-      subor = open('KLIENTI.txt','a')
-      subor.write('\n'+str(ip)+';'+meno1+';'+prie1+';'+rodne1)
-      subor.close()
+            subor = open('KLIENTI.txt','a')
+            subor.write('\n'+str(ip)+';'+meno1+';'+prie1+';'+rodne1)
+            subor.close()
 
 
-      num_lines = sum(1 for line in open('KLIENTI.txt'))
-      pocetriadkov = num_lines - (1)
-      pocetriadkov_str = str(pocetriadkov)
-      print(pocetriadkov_str)
+            num_lines = sum(1 for line in open('KLIENTI.txt'))
+            pocetriadkov = num_lines - (1)
+            pocetriadkov_str = str(pocetriadkov)
+            print(pocetriadkov_str)
 
-      f = open('KLIENTI.txt')
-      lines = f.readlines()
-      lines[0] = pocetriadkov_str+"\n"
+            f = open('KLIENTI.txt')
+            lines = f.readlines()
+            lines[0] = pocetriadkov_str+"\n"
 
-      f = open('KLIENTI.txt',"w")
-      f.writelines(lines)
-      f.close()
+            f = open('KLIENTI.txt',"w")
+            f.writelines(lines)
+            f.close()
 
-      uspesnevytvorenie()
+            uspesnevytvorenie()
             
 
-##            uctyLockSubor.close()
-##            os.remove("pokus3_LOCK.txt")
+            uctyLockSubor.close()
+            os.remove("KLIENTI_LOCK.txt")
 
       
       
@@ -254,24 +256,29 @@ def vypis_info():
       canvas.create_text(w//50,h//8,text='DETAIL KLIENTA',font='arial 20',anchor ='w')
       canvas.create_text(w//50,h/9*4,text='Zoznam účtov',font='arial 16',anchor ='w')
 
-      
-      subor = open('KLIENTI.txt','r')
+      if(os.path.exists("KLIENTI_LOCK.txt")):
+            canvas.after(2000,vypis_info)
+      elif(os.path.exists("KLIENTI_LOCK.txt")==False):
+            uctyLockSubor = open("KLIENTI_LOCK.txt", "w+")
+            subor = open('KLIENTI.txt','r')
 
-      for i in range (int(subor.readline())):
-            riadok = subor.readline()
-            pozicia = riadok.find(rodne_cislo)
+            for i in range (int(subor.readline())):
+                  riadok = subor.readline()
+                  pozicia = riadok.find(rodne_cislo)
 
-            if int(pozicia) > 0:
-                  print(riadok)
-                  rozdelenie = riadok.split(';')
+                  if int(pozicia) > 0:
+                        print(riadok)
+                        rozdelenie = riadok.split(';')
 
-                  ip = rozdelenie[0]
-                  meno = rozdelenie[1]
-                  priezvisko = rozdelenie[2]
-                  rodnecislo = rozdelenie[3]
+                        ip = rozdelenie[0]
+                        meno = rozdelenie[1]
+                        priezvisko = rozdelenie[2]
+                        rodnecislo = rozdelenie[3]
 
-                  print(meno)
-      subor.close()
+                        print(meno)
+            subor.close()
+            uctyLockSubor.close()
+            os.remove("KLIENTI_LOCK.txt")
             
       canvas.create_text(w//50,h//4.5,text='id:               '+ip,font='arial 16',anchor ='w')
       canvas.create_text(w//50,h//4.5+25,text='meno:         '+meno,font='arial 16',anchor ='w')
@@ -301,32 +308,43 @@ def vypis_info():
       buttonodobratucet.place(x = w//50+196,y = h//2+210)
 
       
-
+      if(os.path.exists("UCTY_LOCK.txt")):
+            canvas.after(2000,vypis_info)
+      elif(os.path.exists("UCTY_LOCK.txt")==False):
+            uctyLockSubor = open("UCTY_LOCK.txt", "w+")
       
-      subor = open('UCTY.txt','r')
-      print(ip)
-      ucty = []
-      for i in range(int(subor.readline())):
-            riadok = subor.readline()
-            print(riadok)
-            rozdelenie = riadok.split(';')
-            ip_uctu = rozdelenie[0]
-            ip_klienta = rozdelenie[1]
-            cislo_uctu = rozdelenie[2]
-            pm = rozdelenie[3]
-            stav = rozdelenie[4]
-            print("ip_uctu: ",ip_uctu)
-            print("ip_clienta: ",ip_klienta)
-            print("ip_main: ",ip)
+            subor = open('UCTY.txt','r')
+            print(ip)
+            ucty = []
+            for i in range(int(subor.readline())):
+                  riadok = subor.readline()
+                  print(riadok)
+                  rozdelenie = riadok.split(';')
+                  ip_uctu = rozdelenie[0]
+                  ip_klienta = rozdelenie[1]
+                  cislo_uctu = rozdelenie[2]
+                  pm = rozdelenie[3]
+                  stav = rozdelenie[4]
+                  print("ip_uctu: ",ip_uctu)
+                  print("ip_clienta: ",ip_klienta)
+                  print("ip_main: ",ip)
+
+                  
+                  if int(ip_klienta) == int(ip):
+                        ucty.append(cislo_uctu)
+            subor.close()
+            print(ucty)
+            uctyLockSubor.close()
+            os.remove("UCTY_LOCK.txt")
+
 
             
-            if int(ip_klienta) == int(ip):
-                  ucty.append(cislo_uctu)
-      subor.close()
-      print(ucty)
-
       for acc in sorted(ucty):
           listboxUcty.insert(tkinter.END, acc)
+
+
+      pokus = True
+      
 
 
 
@@ -338,17 +356,21 @@ def ucet_detail():
       print(cislo_uctu)
     
     ####
-
-      subor = open('UCTY.txt','r')
-      
-      for i in range (int(subor.readline())):
-            riadok = subor.readline()
-            rozdelenie = riadok.split(';')
-            if str(rozdelenie[2]) == str(cislo_uctu) :
-                  ip_uctu = rozdelenie[0]
-                  print(ip_uctu)
-      subor.close()
-
+      if(os.path.exists("UCTY_LOCK.txt")):
+            canvas.after(2000,ucet_detail)
+      elif(os.path.exists("UCTY_LOCK.txt")==False):
+            uctyLockSubor = open("UCTY_LOCK.txt", "w+")
+            subor = open('UCTY.txt','r')
+            
+            for i in range (int(subor.readline())):
+                  riadok = subor.readline()
+                  rozdelenie = riadok.split(';')
+                  if str(rozdelenie[2]) == str(cislo_uctu) :
+                        ip_uctu = rozdelenie[0]
+                        print(ip_uctu)
+            subor.close()
+            uctyLockSubor.close()
+            os.remove("UCTY_LOCK.txt")
 
 
       listboxObraty.delete(0,tkinter.END)
@@ -389,29 +411,39 @@ def ulozit():
 
 def edit_klienta():
       global ip, entryMeno2, entryPriezvisko2,entryRodnecislo2,uspesneeditovanie
-      subor = open('KLIENTI.txt','r')
-      
-      for i in range (int(subor.readline())):
-            riadok = subor.readline()
-            rozdelenie = riadok.split(';')
-
-            if rozdelenie[0] == ip:
-                  riadok_cislo = i+1
-      subor.close()
 
 
-      novemeno = entryMeno2.get()
-      noveprie = entryPriezvisko2.get()
-      novecislo = entryRodnecislo2.get()
+      if(os.path.exists("KLIENTI_LOCK.txt")):
+            canvas.after(2000,edit_klienta)
+      elif(os.path.exists("KLIENTI_LOCK.txt")==False):
+            uctyLockSubor = open("KLIENTI_LOCK.txt", "w+")
+            
+            subor = open('KLIENTI.txt','r')
+            
+            for i in range (int(subor.readline())):
+                  riadok = subor.readline()
+                  rozdelenie = riadok.split(';')
+
+                  if rozdelenie[0] == ip:
+                        riadok_cislo = i+1
+            subor.close()
+            
+
+            novemeno = entryMeno2.get()
+            noveprie = entryPriezvisko2.get()
+            novecislo = entryRodnecislo2.get()
 
 
-      f = open('KLIENTI.txt')
-      lines = f.readlines()
-      lines[riadok_cislo] = ip+";"+novemeno+";"+noveprie+";"+novecislo
+            f = open('KLIENTI.txt')
+            lines = f.readlines()
+            lines[riadok_cislo] = ip+";"+novemeno+";"+noveprie+";"+novecislo
 
-      f = open('KLIENTI.txt',"w")
-      f.writelines(lines)
-      f.close()
+            f = open('KLIENTI.txt',"w")
+            f.writelines(lines)
+            f.close()
+
+            uctyLockSubor.close()
+            os.remove("KLIENTI_LOCK.txt")
 
       uspesneeditovanie()
       
@@ -453,8 +485,10 @@ def formular2():
       entryRodnecislo2.place(x=w//3,y=h//20*6,height=30)
       canvas.create_text(w//3-15,h//20*6+15,text='Rodné číslo:',font='Arial 15',anchor="e")
 
-      
-
+      if pokus == True:
+            entryMeno2.insert(0,meno)
+            entryPriezvisko2.insert(0,priezvisko)
+            entryRodnecislo2.insert(0,rodnecislo)
       
       buttonulozit2 = tkinter.Button(text='ULOŽIŤ',font="Helvetica 10",command = edit_klienta,height = 2,width = 10)
       buttonulozit2.pack()
@@ -562,43 +596,51 @@ def uspesneeditovanie():
       
 def vymazat_klienta():
       global ip
-      
-      subor = open('KLIENTI.txt','r')
-      
-      for i in range (int(subor.readline())):
-            riadok = subor.readline()
-            rozdelenie = riadok.split(';')
 
-            if rozdelenie[0] == ip:
-                  riadok_cislo = i+1
-                  print(i+1)
-                  print(rozdelenie[0])
-                  print(riadok)
-                  print(riadok_cislo)
-                  
-      subor.close()
+      if(os.path.exists("KLIENTI_LOCK.txt")):
+            canvas.after(2000,vymazat_klienta)
+      elif(os.path.exists("KLIENTI_LOCK.txt")==False):
+            uctyLockSubor = open("KLIENTI_LOCK.txt", "w+")
+            
+            subor = open('KLIENTI.txt','r')
+            
+            for i in range (int(subor.readline())):
+                  riadok = subor.readline()
+                  rozdelenie = riadok.split(';')
+
+                  if rozdelenie[0] == ip:
+                        riadok_cislo = i+1
+                        print(i+1)
+                        print(rozdelenie[0])
+                        print(riadok)
+                        print(riadok_cislo)
+                        
+            subor.close()
        
-      f = open('KLIENTI.txt')
-      lines = f.readlines()
-      lines[riadok_cislo] = ""
+            f = open('KLIENTI.txt')
+            lines = f.readlines()
+            lines[riadok_cislo] = ""
 
-      f = open('KLIENTI.txt',"w")
-      f.writelines(lines)
-      f.close()
+            f = open('KLIENTI.txt',"w")
+            f.writelines(lines)
+            f.close()
 
 
-      num_lines = sum(1 for line in open('KLIENTI.txt'))
-      pocetriadkov = num_lines - (1)
-      pocetriadkov_str = str(pocetriadkov)
-      print(pocetriadkov_str)
+            num_lines = sum(1 for line in open('KLIENTI.txt'))
+            pocetriadkov = num_lines - (1)
+            pocetriadkov_str = str(pocetriadkov)
+            print(pocetriadkov_str)
 
-      f = open('KLIENTI.txt')
-      lines = f.readlines()
-      lines[0] = pocetriadkov_str+"\n"
+            f = open('KLIENTI.txt')
+            lines = f.readlines()
+            lines[0] = pocetriadkov_str+"\n"
 
-      f = open('KLIENTI.txt',"w")
-      f.writelines(lines)
-      f.close()
+            f = open('KLIENTI.txt',"w")
+            f.writelines(lines)
+            f.close()
+
+            uctyLockSubor.close()
+            os.remove("KLIENTI_LOCK.txt")
 
 
 menu()
