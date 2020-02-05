@@ -19,12 +19,13 @@ zmazatlistbox = False
 pokus = False 
 
 
-
+front = ('SK407500')
+pole = []
 transakcie = []
 ucty = []
       
 def menu():
-      global buttonVytvorit,entryRodne,listboxUcty,listboxObraty,zmazatlistbox, buttondetailuctu,buttonpridatucet,buttonodobratucet,rodne_cislo,buttonNajst, buttonDetail,zmazatOkna, buttonUpravit, buttonZmazat, button5,menuImg,labelMenuImg, obrazok, button6, ucet,zmazatKlientaOkno,zmazatentry2,entryMeno2, entryRodnecislo,entryPriezvisko2,entryRodnecislo2, entryPriezvisko, mail, zmazatentry, buttonspat,buttonulozit, zmazatbuttony
+      global buttonVytvorit,entryRodne,listboxUcty,listboxObraty,zmazatlistbox, buttondetailuctu,buttonosobny,buttonobchodny,buttonodobratucet,rodne_cislo,buttonNajst, buttonDetail,zmazatOkna, buttonUpravit, buttonZmazat, button5,menuImg,labelMenuImg, obrazok, button6, ucet,zmazatKlientaOkno,zmazatentry2,entryMeno2, entryRodnecislo,entryPriezvisko2,entryRodnecislo2, entryPriezvisko, mail, zmazatentry, buttonspat,buttonulozit, zmazatbuttony
       canvas.delete('all')
       print(zmazatlistbox)
       if (zmazatentry==True):
@@ -55,7 +56,8 @@ def menu():
             listboxUcty.destroy()
             listboxObraty.destroy()
             buttondetailuctu.destroy()
-            buttonpridatucet.destroy()
+            buttonosobny.destroy()
+            buttonobchodny.destroy()
             buttonodobratucet.destroy()
           
  
@@ -237,16 +239,16 @@ def pridaj_klienta():
       
 
 def vypis_info():
-      global ip,meno,priezvisko,rodnecislo,pokus, existujeklient, ucty,zmazatlistbox, listboxUcty, listboxObraty, buttondetailuctu,buttonpridatucet,buttonodobratucet
+      global ip,meno,priezvisko,rodnecislo,pokus, existujeklient, ucty,zmazatlistbox, listboxUcty, listboxObraty, buttondetailuctu,buttonosobny,buttonobchodny,buttonodobratucet
       rodne_cislo = entryRodne.get()
       print(rodne_cislo)
 
       if (zmazatlistbox==True):
-            print('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
             listboxUcty.destroy()
             listboxObraty.destroy()
             buttondetailuctu.destroy()
-            buttonpridatucet.destroy()
+            buttonosobny.destroy()
+            buttonobchodny.destroy()
             buttonodobratucet.destroy()
             
       zmazatlistbox = False
@@ -299,13 +301,17 @@ def vypis_info():
       buttondetailuctu.pack()
       buttondetailuctu.place(x = w//50-4,y = h//2+210)
 
-      buttonpridatucet = tkinter.Button(text='Pridať účet',font="Helvetica 10",command = pridatucet,height = 2,width = 10)
-      buttonpridatucet.pack()
-      buttonpridatucet.place(x = w//50+96,y = h//2+210)
+      buttonosobny = tkinter.Button(text='Pridať účet osobný',font="Helvetica 10",command = pridaj_osobny,height = 2,width = 10)
+      buttonosobny.pack()
+      buttonosobny.place(x = w//50+96,y = h//2+210)
+
+      buttonobchodny = tkinter.Button(text='Pridať účet obchodný',font="Helvetica 10",command = pridaj_obchodny,height = 2,width = 10)
+      buttonobchodny.pack()
+      buttonobchodny.place(x = w//50+196,y = h//2+210)
 
       buttonodobratucet = tkinter.Button(text='Odobrať účet',font="Helvetica 10",command = None,height = 2,width = 10)
       buttonodobratucet.pack()
-      buttonodobratucet.place(x = w//50+196,y = h//2+210)
+      buttonodobratucet.place(x = w//50+296,y = h//2+210)
 
       
       if(os.path.exists("UCTY_LOCK.txt")):
@@ -346,8 +352,74 @@ def vypis_info():
       pokus = True
       
 
+for i in range(16):
+      randomcislo = randrange(0,10)
+      pole.append(randomcislo)
+
+def convert(pole):
+
+      s = [str(i) for i in pole]
+      res = int("".join(s))
+      return(res)
+
+randomcislo = front+str(convert(pole))
+print(randomcislo)
 
 
+      
+def pridaj_obchodny():
+      subor = open('UCTY.txt','r')
+      riadky = subor.readlines()
+      subor.close()
+
+      riadok = riadky[len(riadky)-1]
+      cislo = riadok.split(';')
+      noveip = int(cislo[0])+(1)
+      print(noveip)
+
+      subor1 = open('UCTY.txt','a')
+      subor1.write('\n'+str(noveip)+';'+str(ip)+';'+str(randomcislo)+';'+'M'+';'+'0')
+      subor1.close()
+
+      num_lines = sum(1 for line in open('UCTY.txt'))
+      pocetriadkov = num_lines - (1)
+      pocetriadkov_str = str(pocetriadkov)
+      print(pocetriadkov_str)
+
+      f = open('UCTY.txt')
+      lines = f.readlines()
+      lines[0] = pocetriadkov_str+"\n"
+
+      f = open('UCTY.txt',"w")
+      f.writelines(lines)
+      f.close()
+
+def pridaj_osobny():
+      subor = open('UCTY.txt','r')
+      riadky = subor.readlines()
+      subor.close()
+
+      riadok = riadky[len(riadky)-1]
+      cislo = riadok.split(';')
+      noveip = int(cislo[0])+(1)
+      print(noveip)
+
+      subor1 = open('UCTY.txt','a')
+      subor1.write('\n'+str(noveip)+';'+str(ip)+';'+str(randomcislo)+';'+'P'+';'+'0')
+      subor1.close()
+
+      num_lines = sum(1 for line in open('UCTY.txt'))
+      pocetriadkov = num_lines - (1)
+      pocetriadkov_str = str(pocetriadkov)
+      print(pocetriadkov_str)
+
+      f = open('UCTY.txt')
+      lines = f.readlines()
+      lines[0] = pocetriadkov_str+"\n"
+
+      f = open('UCTY.txt',"w")
+      f.writelines(lines)
+      f.close()
 
       
 def ucet_detail():
@@ -452,7 +524,7 @@ def edit_klienta():
 
 
 def formular2():
-      global buttonVytvorit,ip,pokus,rodnecislo, buttondetailuctu,buttonpridatucet,buttonodobratucet,zmazatlistbox,listboxUcty,listboxObraty,meno,priezvisko,rodne_cislo,buttonNajst,rodnecislo,entryRodne, buttonDetail,zmazatOkna, buttonUpravit, buttonZmazat, button5, button6,obrazok, ucet,zmazatKlientaOkno, entryMeno, entryPriezvisko, entryRodnecislo,zmazatentry2,entryMeno2, entryPriezvisko2,entryRodnecislo2,zmazatentry, buttonspat,buttonulozit,buttonulozit2, zmazatbuttony, zmazatUpravit
+      global buttonVytvorit,ip,pokus,rodnecislo, buttondetailuctu,buttonosobny,buttonobchodny,buttonodobratucet,zmazatlistbox,listboxUcty,listboxObraty,meno,priezvisko,rodne_cislo,buttonNajst,rodnecislo,entryRodne, buttonDetail,zmazatOkna, buttonUpravit, buttonZmazat, button5, button6,obrazok, ucet,zmazatKlientaOkno, entryMeno, entryPriezvisko, entryRodnecislo,zmazatentry2,entryMeno2, entryPriezvisko2,entryRodnecislo2,zmazatentry, buttonspat,buttonulozit,buttonulozit2, zmazatbuttony, zmazatUpravit
       canvas.delete('all')
       if (zmazatUpravit==True):
             buttonUpravit.destroy()
@@ -464,7 +536,8 @@ def formular2():
       listboxUcty.destroy()
       listboxObraty.destroy()
       buttondetailuctu.destroy()
-      buttonpridatucet.destroy()
+      buttonobchodny.destroy()
+      buttonosobny.destroy()
       buttonodobratucet.destroy()
             
 
@@ -500,62 +573,9 @@ def formular2():
 
 
                                   
-def pridatucet():
-      global radiobutton_widget1,radiobutton_widget2,variable,v,vv, value
-      parent_widget = tkinter.Tk()
-      v = tkinter.IntVar()
-      parent_widget.geometry('150x100')
-      v.set(1)
-      # need to use v.set and v.get to
-      # set and get the value of this variable
-
-      radiobutton_widget1 = tkinter.Radiobutton(parent_widget, text="Radiobutton 1", variable=v, value=1)
-      radiobutton_widget2 = tkinter.Radiobutton(parent_widget, text="Radiobutton 2", variable=v, value=2)
-      radiobutton_widget1.pack()
-      radiobutton_widget2.pack()
-      
-      button_widget = tkinter.Button(parent_widget, text="A Button", command = ahoj)
-      button_widget.pack()
-      tkinter.mainloop()
 
 
-def sel():
-      selection = "You selected the option " + str(var.get())
-      label.config(text = selection)
-      
-def pridatucet():
-      root = Tk()
-      var = IntVar()
-      R1 = Radiobutton(root, text="Option 1", variable=var, value=1,
-                        command=sel)
-      R1.pack( anchor = W )
 
-      R2 = Radiobutton(root, text="Option 2", variable=var, value=2,
-                        command=sel)
-      R2.pack( anchor = W )
-
-      R3 = Radiobutton(root, text="Option 3", variable=var, value=3,
-                        command=sel)
-      R3.pack( anchor = W)
-
-      label = Label(root)
-      label.pack()
-      root.mainloop()
-
-
-def ahoj():
-      global radiobutton_widget1,radiobutton_widget2,variable,v,vv, value
-      selection = "You selected the option " + str(v.get())
-      print(selection)
-      
-##      print(v.get())
-##      print(value)
-##      if v.get() == 1:
-##            print('JUPIIIIIIIII')
-##      elif v.get() == 2:
-##            print('YESSSSS')
-##      else:
-##            None
             
 def zmazanieklienta():
     messageBox = messagebox.askquestion("Zmazanie Klienta", "Naozaj chcete vymazať klienta?", icon='warning')
@@ -574,25 +594,7 @@ def uspesneeditovanie():
     if messageBox == 'ok':
           None    
       
-##def okno():
-##      global buttonVytvorit, buttonDetail, buttonUpravit,buttonNajst,buttonZmazat, button5, button6, ucet,zmazatKlientaOkno, entryMeno, entryPriezvisko, entryRodnecislo, zmazatentry,zmazatentry2,entryPriezvisko2,entryRodnecislo2, entryMeno2,buttonspat, zmazatbuttony,buttonulozit
-##
-##      zmazatKlientaOkno = True
-##      
-##      button5 = tkinter.Button(text='ANO',font='arial 10',command = vymazat_klienta,height = 1,width = 10)
-##      button5.pack()
-##      button5.place(x=w//3+20,y=h//2+25)
-##      
-##      button6 = tkinter.Button(text='SPAŤ',font='arial 10',command = detailklienta,height = 1,width = 10)
-##      button6.pack()
-##      button6.place(x=w//2+100,y=h//2+25)
-## 
-##      canvas.create_rectangle(w//6*2,h//10*4,w//6*4,h//10*6,width = 4,fill='white')
-##      canvas.create_text(w//6*3,h//10*4+30,text='Ste si istý ?',font='arial 15')
-      
-      
-##def detailucta():
-##      canvas.create_rectangle(720,h//2,1200,700,width = 2)
+
       
 def vymazat_klienta():
       global ip
