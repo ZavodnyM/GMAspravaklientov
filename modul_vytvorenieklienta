@@ -303,8 +303,9 @@ def warning(vstup):
       wrongInsertMessageBox = messagebox.showinfo('Chyba', vstup)
       
 def vypis_info():
-      global ip,rodne_vymaz, meno,priezvisko,detail,rodnecislo,pokus,buttonvklad,buttonvyber, existujeklient, ucty,zmazatlistbox, listboxUcty, listboxObraty, buttondetailuctu,buttonosobny,buttonobchodny,buttonodobratucet
+      global ip,rodne_vymaz,cislo_uctu, meno,priezvisko,detail,rodnecislo,pokus,buttonvklad,buttonvyber, existujeklient, ucty,zmazatlistbox, listboxUcty, listboxObraty, buttondetailuctu,buttonosobny,buttonobchodny,buttonodobratucet
 
+      cislo_uctu = ''
       detail = True
       rodne_cislo = entryRodne.get()
       #print(rodne_cislo)
@@ -418,8 +419,8 @@ def vypis_info():
             
             for acc in sorted(ucty):
                 listboxUcty.insert(tkinter.END, acc)
-
-
+                listboxUcty.select_set(0)
+                
       pokus = True
       
 def convert(pole):
@@ -1016,8 +1017,8 @@ def odstranit_ucet():
       global cislo_uctu
       cislo_uctu = ''
       cislo_uctu = listboxUcty.get('active')
-      print(cislo_uctu)
-
+      print('active:', cislo_uctu)
+ 
       if os.path.exists('UCTY_LOCK.txt'):
             canvas.after(2000, odstranit_ucet)
       else:
