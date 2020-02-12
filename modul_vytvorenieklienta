@@ -664,9 +664,17 @@ def vklad():
                                     riadok_cislo = i+1
                         subor.close()
 
+                        num_lines = sum(1 for line in open('UCTY.txt'))
+                        pocetriadkov = num_lines - (1)
+                  
                         f = open('UCTY.txt')
                         lines = f.readlines()
-                        lines[riadok_cislo] = ip_uctu+";"+ip_klienta+";"+cislo_uctu+";"+typ+";"+str(sucet) + '\n' 
+                        
+                        if riadok_cislo == pocetriadkov:
+                              lines[riadok_cislo] = ip_uctu+";"+ip_klienta+";"+cislo_uctu+";"+typ+";"+str(sucet)
+                        else:
+                              lines[riadok_cislo] = ip_uctu+";"+ip_klienta+";"+cislo_uctu+";"+typ+";"+str(sucet) + '\n'
+                              
                         print(lines, lines[riadok_cislo])
                         
                         f = open('UCTY.txt',"w+")
@@ -748,8 +756,16 @@ def vyber():
 
                         f = open('UCTY.txt')
                         lines = f.readlines()
-                        lines[riadok_cislo] = ip_uctu+";"+ip_klienta+";"+cislo_uctu+";"+typ+";"+str(sucet) + '\n'
 
+                        num_lines = sum(1 for line in open('UCTY.txt'))
+                        pocetriadkov = num_lines - (1)
+
+                        if riadok_cislo == pocetriadkov:
+                              lines[riadok_cislo] = ip_uctu+";"+ip_klienta+";"+cislo_uctu+";"+typ+";"+str(sucet)
+                        else:
+                              lines[riadok_cislo] = ip_uctu+";"+ip_klienta+";"+cislo_uctu+";"+typ+";"+str(sucet) + '\n'
+                        
+                        
                         f = open('UCTY.txt',"w")
                         f.writelines(lines)
                         f.close()
@@ -1053,188 +1069,6 @@ def odstranit_ucet():
                   warning('Vyberte ucet, ktory chcete vymazať')
 
 
-
-##            for i in range(int(linesQuantity)):
-##                  
-##                  riadok = subor.readline().strip().split(';')
-##                  if riadok[3] == str(cislo_uctu):
-##                        vymaz_riadok_ucet = ';'.join(riadok)
-##                        vymaz_riadok_ucet = '\n' + vymaz_riadok_ucet
-##                        print(vymaz_riadok_ucet)
-
-##      if cislo_uctu != '':
-##            if os.path.exists('UCTY_LOCK.txt'):
-##                  print('there is a lock file')
-##                  canvas.after(2000,odstranit_ucet)
-##            else:
-##                  subor_lock = open('UCTY_LOCK.txt','w+')
-##                  subor = open('UCTY.txt','r')
-##
-##                  for i in range (int(subor.readline())):
-##                        riadok = subor.readline().strip()
-##                        rozdelenie = riadok.split(';')
-##                        if rozdelenie[2] == cislo_uctu:
-##                              riadok_cislo = i+1
-##                  subor.close()
-##
-##                  f = open('UCTY.txt')
-##                  lines = f.readlines()
-##                  lines.remove(lines[riadok_cislo])
-##                  lines[riadok_cislo-1] = lines[riadok_cislo-1].strip()
-##
-##                  f = open('UCTY.txt',"w")
-##                  f.writelines(lines)
-##                  f.close()
-##
-##
-##                  num_lines = sum(1 for line in open('UCTY.txt'))
-##                  pocetriadkov = num_lines - (1)
-##                  pocetriadkov_str = str(pocetriadkov)
-##                  #print(pocetriadkov_str)
-##
-##                  f = open('UCTY.txt')
-##                  lines = f.readlines()
-##                  lines[0] = pocetriadkov_str+"\n"
-##
-##                  f = open('UCTY.txt',"w")
-##                  f.writelines(lines)
-##                  f.close()
-##
-##                  verzia = open('KLIENTI_VERZIA.txt', 'r+')
-##                  verzia_pocet = str(int(verzia.readline().strip())+1)
-##                  verzia = open('KLIENTI_VERZIA.txt', 'w')
-##                  verzia.writelines(verzia_pocet)
-##                  verzia.close()
-##                  
-##                  subor_lock.close()
-##                  os.remove('UCTY_LOCK.txt')
-##                  
-##                  vypis_info()
-##                  uspesneodstranenie()
-                  
-##def odstranit_ucet():
-##      global cislo_uctu
-##      cislo_uctu = ''
-##      cislo_uctu = listboxUcty.get('active')
-##      print(cislo_uctu)
-##
-##      if cislo_uctu != '':
-##            if os.path.exists('UCTY_LOCK.txt'):
-##                  print('there is a lock file')
-##                  canvas.after(2000,odstranit_ucet)
-##            else:
-##                  subor_lock = open('UCTY_LOCK.txt','w+')
-##                  subor = open('UCTY.txt','r')
-##
-##                  for i in range (int(subor.readline())):
-##                        riadok = subor.readline().strip()
-##                        rozdelenie = riadok.split(';')
-##                        if rozdelenie[2] == cislo_uctu:
-##                              riadok_cislo = i+1
-##                  subor.close()
-##
-##                  f = open('UCTY.txt')
-##                  lines = f.readlines()
-##                  lines.remove(lines[riadok_cislo])
-##                  lines[riadok_cislo-1] = lines[riadok_cislo-1].strip()
-##
-##                  f = open('UCTY.txt',"w")
-##                  f.writelines(lines)
-##                  f.close()
-##
-##
-##                  num_lines = sum(1 for line in open('UCTY.txt'))
-##                  pocetriadkov = num_lines - (1)
-##                  pocetriadkov_str = str(pocetriadkov)
-##                  #print(pocetriadkov_str)
-##
-##                  f = open('UCTY.txt')
-##                  lines = f.readlines()
-##                  lines[0] = pocetriadkov_str+"\n"
-##
-##                  f = open('UCTY.txt',"w")
-##                  f.writelines(lines)
-##                  f.close()
-##
-##                  verzia = open('KLIENTI_VERZIA.txt', 'r+')
-##                  verzia_pocet = str(int(verzia.readline().strip())+1)
-##                  verzia = open('KLIENTI_VERZIA.txt', 'w')
-##                  verzia.writelines(verzia_pocet)
-##                  verzia.close()
-##                  
-##                  subor_lock.close()
-##                  os.remove('UCTY_LOCK.txt')
-##                  
-##                  vypis_info()
-##                  uspesneodstranenie()    
-
-
-##def vymazat_klienta():
-##      global ip, vymazriadok
-##      if(os.path.exists("KLIENTI_LOCK.txt")):
-##            canvas.after(2000,vymazat_klienta)
-##      else:
-##            uctyLockSubor = open("KLIENTI_LOCK.txt", "w+")
-##            
-##            subor = open('KLIENTI.txt','r')
-##            
-##            for i in range (int(subor.readline())):
-##                  riadok = subor.readline()
-##                  rozdelenie = riadok.split(';')
-##
-##                  if rozdelenie[0] == ip:
-##                        riadok_cislo = i+1
-##                        print(i+1)
-##                        print(rozdelenie[0])
-##                        print(riadok)
-##                        print(riadok_cislo)
-##                        
-##            subor.close()
-##       
-##            f = open('KLIENTI.txt')
-##            lines = f.readlines()
-##            vymazriadok = str('\n' + lines[riadok_cislo])
-##            lines = f.read()
-##            lines.replace(vymazriadok, '')
-###            lines.remove('\n' + lines[riadok_cislo])
-##            #lines[riadok_cislo-1] = lines[riadok_cislo-1].strip()
-##            
-##            f = open('KLIENTI.txt',"w")
-##            f.writelines(lines)
-##            f.close()
-##
-##
-####            num_lines = sum(1 for line in open('KLIENTI.txt'))                           ######################## error vymaze cely subor KLIENTI
-####            pocetriadkov = num_lines - (1)
-####            pocetriadkov_str = str(pocetriadkov)
-####            print(pocetriadkov_str)
-##
-##            subor = open('KLIENTI.txt', 'r+')
-##            riadok = subor.readline().strip()
-##            print(riadok)
-##            riadok = int(riadok) + 1
-##            pocetriadkov_str = str(riadok)
-##
-##            f = open('KLIENTI.txt')
-##            lines = f.readlines()
-##            print(lines)
-##            lines[0] = pocetriadkov_str
-##            
-##
-##            f = open('KLIENTI.txt',"w")
-##            f.writelines(lines)
-##            f.close()
-##
-##            verzia = open('KLIENTI_VERZIA.txt', 'r+')
-##            verzia_pocet = str(int(verzia.readline().strip())+1)
-##            verzia = open('KLIENTI_VERZIA.txt', 'w')
-##            verzia.writelines(verzia_pocet)
-##            verzia.close()
-##            
-##            uctyLockSubor.close()
-##            os.remove("KLIENTI_LOCK.txt")
-##
-##            menu()
 
 
 menu()
